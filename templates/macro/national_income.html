@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 مؤشرات الدخل الوطني | EconoCalc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8fafc;
+        }
+        .form-section {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .form-section:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .input-field {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            transition: border-color 0.2s;
+        }
+        .input-field:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        .result-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">📊 مؤشرات الدخل الوطني</h1>
+            <p class="text-gray-600">حساب المؤشرات الاقتصادية الأساسية للدخل الوطني</p>
+        </div>
+
+        <form method="get" action="/macro/national-income" class="space-y-6">
+            <!-- VA Section -->
+            <div class="form-section p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                        <span class="text-blue-600 text-xl">1</span>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-800">القيمة المضافة (VA)</h2>
+                </div>
+                <p class="text-gray-600 mb-4">VA = الإنتاج - الاستهلاك الوسيط</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الإنتاج (P)</label>
+                        <input type="number" step="0.01" name="p" placeholder="أدخل قيمة الإنتاج" 
+                               class="input-field w-full px-4 py-2" value="{{ values.p or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الاستهلاك الوسيط (CI)</label>
+                        <input type="number" step="0.01" name="ci" placeholder="أدخل قيمة الاستهلاك الوسيط" 
+                               class="input-field w-full px-4 py-2" value="{{ values.ci or '' }}">
+                    </div>
+                </div>
+                {% if va is not none %}
+                <div class="result-box mt-4 px-4 py-3 rounded">
+                    <span class="font-medium text-green-700">✅ VA = {{ va }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- PIB Section -->
+            <div class="form-section p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-100 p-3 rounded-lg mr-4">
+                        <span class="text-green-600 text-xl">2</span>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-800">الناتج المحلي الإجمالي (PIB)</h2>
+                </div>
+                <p class="text-gray-600 mb-4">PIB = VA + TVA - SUB</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">القيمة المضافة (VA)</label>
+                        <input type="number" step="0.01" name="va" placeholder="أدخل القيمة المضافة" 
+                               class="input-field w-full px-4 py-2" value="{{ va or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الضرائب (TVA)</label>
+                        <input type="number" step="0.01" name="tva" placeholder="أدخل قيمة الضرائب" 
+                               class="input-field w-full px-4 py-2" value="{{ values.tva or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الإعانات (SUB)</label>
+                        <input type="number" step="0.01" name="sub" placeholder="أدخل قيمة الإعانات" 
+                               class="input-field w-full px-4 py-2" value="{{ values.sub or '' }}">
+                    </div>
+                </div>
+                {% if pib is not none %}
+                <div class="result-box mt-4 px-4 py-3 rounded">
+                    <span class="font-medium text-green-700">✅ PIB = {{ pib }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- PNB Section -->
+            <div class="form-section p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                        <span class="text-purple-600 text-xl">3</span>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-800">الناتج القومي الإجمالي (PNB)</h2>
+                </div>
+                <p class="text-gray-600 mb-4">PNB = PIB + RFR - RFV</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">PIB</label>
+                        <input type="number" step="0.01" name="pib" placeholder="أدخل قيمة PIB" 
+                               class="input-field w-full px-4 py-2" value="{{ pib or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">إيرادات من الخارج (RFR)</label>
+                        <input type="number" step="0.01" name="rfr" placeholder="أدخل قيمة RFR" 
+                               class="input-field w-full px-4 py-2" value="{{ values.rfr or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">مدفوعات إلى الخارج (RFV)</label>
+                        <input type="number" step="0.01" name="rfv" placeholder="أدخل قيمة RFV" 
+                               class="input-field w-full px-4 py-2" value="{{ values.rfv or '' }}">
+                    </div>
+                </div>
+                {% if pnb is not none %}
+                <div class="result-box mt-4 px-4 py-3 rounded">
+                    <span class="font-medium text-green-700">✅ PNB = {{ pnb }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- PNN Section -->
+            <div class="form-section p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                        <span class="text-yellow-600 text-xl">4</span>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-800">الناتج القومي الصافي (PNN)</h2>
+                </div>
+                <p class="text-gray-600 mb-4">PNN = PNB - الاستهلاك (AM)</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">PNB</label>
+                        <input type="number" step="0.01" name="pnb" placeholder="أدخل قيمة PNB" 
+                               class="input-field w-full px-4 py-2" value="{{ pnb or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الاستهلاك (AM)</label>
+                        <input type="number" step="0.01" name="am" placeholder="أدخل قيمة الاستهلاك" 
+                               class="input-field w-full px-4 py-2" value="{{ values.am or '' }}">
+                    </div>
+                </div>
+                {% if pnn is not none %}
+                <div class="result-box mt-4 px-4 py-3 rounded">
+                    <span class="font-medium text-green-700">✅ PNN = {{ pnn }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- RN Section -->
+            <div class="form-section p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-red-100 p-3 rounded-lg mr-4">
+                        <span class="text-red-600 text-xl">5</span>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-800">الدخل الوطني (RN)</h2>
+                </div>
+                <p class="text-gray-600 mb-4">RN = PNN - الضرائب غير المباشرة (Ind)</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">PNN</label>
+                        <input type="number" step="0.01" name="pnn" placeholder="أدخل قيمة PNN" 
+                               class="input-field w-full px-4 py-2" value="{{ pnn or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الضرائب غير المباشرة (Ind)</label>
+                        <input type="number" step="0.01" name="indirect" placeholder="أدخل قيمة الضرائب" 
+                               class="input-field w-full px-4 py-2" value="{{ values.indirect or '' }}">
+                    </div>
+                </div>
+                {% if rn is not none %}
+                <div class="result-box mt-4 px-4 py-3 rounded">
+                    <span class="font-medium text-green-700">✅ RN = {{ rn }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- RP Section -->
+            <div class="form-section p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-indigo-100 p-3 rounded-lg mr-4">
+                        <span class="text-indigo-600 text-xl">6</span>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-800">الدخل الشخصي (RP)</h2>
+                </div>
+                <p class="text-gray-600 mb-4">RP = RN - Pr - Id + TR</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الدخل الوطني (RN)</label>
+                        <input type="number" step="0.01" name="rn" placeholder="أدخل قيمة RN" 
+                               class="input-field w-full px-4 py-2" value="{{ rn or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الأرباح غير الموزعة (Pr)</label>
+                        <input type="number" step="0.01" name="pr" placeholder="أدخل قيمة Pr" 
+                               class="input-field w-full px-4 py-2" value="{{ values.pr or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ضرائب الدخل (Id)</label>
+                        <input type="number" step="0.01" name="id1" placeholder="أدخل قيمة Id" 
+                               class="input-field w-full px-4 py-2" value="{{ values.id1 or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">التحويلات (TR)</label>
+                        <input type="number" step="0.01" name="tr" placeholder="أدخل قيمة TR" 
+                               class="input-field w-full px-4 py-2" value="{{ values.tr or '' }}">
+                    </div>
+                </div>
+                {% if rp is not none %}
+                <div class="result-box mt-4 px-4 py-3 rounded">
+                    <span class="font-medium text-green-700">✅ RP = {{ rp }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- RND Section -->
+            <div class="form-section p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-pink-100 p-3 rounded-lg mr-4">
+                        <span class="text-pink-600 text-xl">7</span>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-800">الدخل المتاح (RND)</h2>
+                </div>
+                <p class="text-gray-600 mb-4">RND = RP - Id</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الدخل الشخصي (RP)</label>
+                        <input type="number" step="0.01" name="rp" placeholder="أدخل قيمة RP" 
+                               class="input-field w-full px-4 py-2" value="{{ rp or '' }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">ضرائب الدخل (Id)</label>
+                        <input type="number" step="0.01" name="id2" placeholder="أدخل قيمة Id" 
+                               class="input-field w-full px-4 py-2" value="{{ values.id2 or '' }}">
+                    </div>
+                </div>
+                {% if rnd is not none %}
+                <div class="result-box mt-4 px-4 py-3 rounded">
+                    <span class="font-medium text-green-700">✅ RND = {{ rnd }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg shadow-md transition duration-300">
+                    حساب جميع المؤشرات
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

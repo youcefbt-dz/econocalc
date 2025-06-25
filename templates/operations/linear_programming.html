@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>حل البرمجة الخطية</title>
+</head>
+<body>
+    <h2>🔢 نموذج برمجة خطية (مثال جاهز)</h2>
+    <p>هدف: <strong>تعظيم Z = 40x + 30y</strong></p>
+    <p>القيود:</p>
+    <ul>
+        <li>x + y ≤ 100</li>
+        <li>2x + y ≤ 150</li>
+        <li>x, y ≥ 0</li>
+    </ul>
+
+    <form method="get" action="/operations/solve">
+        <button type="submit">🔍 حل المسألة</button>
+    </form>
+
+    {% if result %}
+        <h3>✅ النتيجة:</h3>
+        <p>x = {{ result.x }}</p>
+        <p>y = {{ result.y }}</p>
+        <p>القيمة القصوى Z = {{ result.z }}</p>
+    {% elif result and result.error %}
+        <p style="color:red;">{{ result.error }}</p>
+    {% endif %}
+</body>
+</html>

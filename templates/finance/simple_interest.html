@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الفائدة البسيطة | EconoCalc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8fafc;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23e2e8f0' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+        }
+        .input-field {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+        .result-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 4px solid #10b981;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- رأس الصفحة -->
+    <header class="bg-gradient-to-r from-purple-600 to-indigo-700 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-center">
+                <div class="bg-white/20 p-3 rounded-full mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold">حاسبة الفائدة البسيطة</h1>
+                    <p class="text-sm opacity-90 mt-1">أداة متقدمة لحساب الفائدة البسيطة على القروض والاستثمارات</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="card p-8 max-w-2xl mx-auto">
+            <form method="get" action="/finance/simple-interest" class="space-y-6">
+                <!-- المبلغ الأصلي -->
+                <div>
+                    <div class="flex items-center mb-2">
+                        <div class="bg-green-100 p-2 rounded-lg text-green-600 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <label class="block text-lg font-medium text-gray-700">المبلغ الأصلي (P)</label>
+                    </div>
+                    <input type="number" name="principal" step="0.01" required
+                           class="input-field w-full p-4 focus:outline-none" 
+                           placeholder="أدخل المبلغ الأصلي للقرض أو الاستثمار"
+                           value="{{ values.principal if values else '' }}">
+                </div>
+
+                <!-- معدل الفائدة -->
+                <div>
+                    <div class="flex items-center mb-2">
+                        <div class="bg-blue-100 p-2 rounded-lg text-blue-600 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                            </svg>
+                        </div>
+                        <label class="block text-lg font-medium text-gray-700">معدل الفائدة (r)</label>
+                    </div>
+                    <input type="number" name="rate" step="0.01" required
+                           class="input-field w-full p-4 focus:outline-none" 
+                           placeholder="أدخل معدل الفائدة السنوي (مثال: 0.05 لـ 5%)"
+                           value="{{ values.rate if values else '' }}">
+                    <p class="text-sm text-gray-500 mt-1">أدخل النسبة العشرية (5% = 0.05)</p>
+                </div>
+
+                <!-- الزمن بالسنوات -->
+                <div>
+                    <div class="flex items-center mb-2">
+                        <div class="bg-purple-100 p-2 rounded-lg text-purple-600 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <label class="block text-lg font-medium text-gray-700">الزمن (t) بالسنوات</label>
+                    </div>
+                    <input type="number" name="time" step="0.01" required
+                           class="input-field w-full p-4 focus:outline-none" 
+                           placeholder="أدخل مدة القرض أو الاستثمار بالسنوات"
+                           value="{{ values.time if values else '' }}">
+                </div>
+
+                <!-- زر الحساب -->
+                <div class="pt-4">
+                    <button type="submit" class="btn-primary text-white font-medium w-full py-4 px-6 rounded-lg text-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        احسب الفائدة البسيطة
+                    </button>
+                </div>
+            </form>
+
+            <!-- النتيجة -->
+            {% if result is not none %}
+            <div class="result-box p-6 rounded-lg mt-8 text-center">
+                <div class="text-3xl font-bold text-green-700 mb-2">{{ "%.2f"|format(result) }}</div>
+                <p class="text-green-600 font-medium">قيمة الفائدة البسيطة</p>
+                <div class="mt-4 text-sm text-green-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    معادلة الحساب: I = P × r × t
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- معلومات إضافية -->
+        <div class="max-w-2xl mx-auto mt-8 text-gray-600 text-sm">
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                <h3 class="font-medium text-gray-700 mb-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    معلومات عن الفائدة البسيطة
+                </h3>
+                <p class="leading-relaxed">
+                    الفائدة البسيطة هي فائدة تحسب على المبلغ الأصلي فقط طوال مدة القرض أو الاستثمار.
+                    تختلف عن الفائدة المركبة التي تحسب الفائدة على المبلغ الأصلي مضافاً إليه الفوائد المتراكمة من الفترات السابقة.
+                </p>
+            </div>
+        </div>
+
+        <!-- زر الرجوع -->
+        <div class="text-center mt-8">
+            <a href="/finance" class="inline-block bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-3 px-6 rounded-lg transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                العودة إلى أدوات الرياضيات المالية
+            </a>
+        </div>
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer class="bg-white border-t py-6">
+        <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+            &copy; 2025 EconoCalc | جميع الحقوق محفوظة
+        </div>
+    </footer>
+</body>
+</html>

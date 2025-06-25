@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EconoCalc | أدواتك المتخصصة للحسابات الاقتصادية والمالية</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: #f0f2f5; /* لون خلفية أفتح وأكثر حداثة */
+      color: #1a202c;
+      transition: background-color 0.3s ease, color 0.3s ease; /* للانتقال السلس بين الأوضاع */
+    }
+
+    /* Dark Mode Styles */
+    body.dark {
+      background-color: #1a202c;
+      color: #e2e8f0;
+    }
+
+    body.dark .card {
+      background: #2d3748;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    body.dark .card:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    body.dark header {
+      background-color: #2d3748;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    body.dark .text-gray-900 { color: #e2e8f0; }
+    body.dark .text-gray-600 { color: #cbd5e0; }
+    body.dark .text-gray-700 { color: #a0aec0; }
+
+    body.dark .section-button {
+        background-color: #2d3748;
+        border-color: #4a5568;
+    }
+
+    body.dark .section-button:hover {
+        background-color: #4a5568;
+    }
+
+    body.dark .section-button h3 {
+        color: #e2e8f0;
+    }
+
+    body.dark .subsection-list {
+        border-color: #4a5568;
+    }
+
+    body.dark .subsection-list li a {
+        color: #cbd5e0;
+    }
+
+    body.dark .subsection-list li a:hover {
+        color: #81e6d9; /* لون مميز للروابط عند التحويم في الوضع الليلي */
+    }
+
+    body.dark .macro-icon { background-color: #6b46c1; color: #e9d5ff; } /* ألوان متناسقة للوضع الليلي */
+    body.dark .finance-icon { background-color: #2c5282; color: #bfdbfe; }
+    body.dark .operations-icon { background-color: #2f855a; color: #d1fae5; }
+    body.dark .future-icon { background-color: #d69e2e; color: #fde68a; }
+    body.dark .indicator-icon { background-color: #c53030; color: #fee2e2; }
+    body.dark .advanced-icon { background-color: #4c51bf; color: #e0e7ff; }
+
+    body.dark hr {
+      border-color: #4a5568;
+    }
+
+    body.dark footer {
+      background-color: #2d3748;
+      border-color: #4a5568;
+    }
+    body.dark footer .text-gray-400 {
+        color: #a0aec0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px; /* حواف أكثر دائرية */
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* ظل أوضح وأكثر جاذبية */
+      transition: all 0.3s ease;
+      overflow: hidden;
+      border: none; /* إزالة الحد */
+    }
+
+    .card:hover {
+      transform: translateY(-8px); /* رفع أكبر عند التحويم */
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* ظل أكبر عند التحويم */
+    }
+
+    /* **الأيقونات الرئيسية في بداية الأقسام** */
+    .section-icon {
+      width: 45px; /* حجم الأيقونة */
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px; /* حواف دائرية */
+      font-size: 24px; /* حجم الأيقونة الداخلية */
+      flex-shrink: 0; /* منع الأيقونة من التقلص */
+    }
+
+    /* **الأيقونات الفرعية داخل القوائم** */
+    .feature-icon {
+      width: 30px; /* حجم أصغر للأيقونات الفرعية */
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-size: 14px;
+      flex-shrink: 0; /* منع الأيقونة من التقلص */
+    }
+
+    .feature-card {
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: scale(1.03);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); /* ألوان بنفسجية وزرقاء أعمق */
+      color: white;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #4f46e5;
+      border: 1px solid #e0e7ff;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #f7f9ff;
+    }
+
+    /* **أنماط أزرار الأقسام الرئيسية (Macro, Finance, etc.)** */
+    .section-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+        background-color: #f8faff;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        border: 1px solid #e0e7ff;
+    }
+
+    .section-button:hover {
+        background-color: #eef2ff;
+        transform: translateY(-2px);
+    }
+
+    .section-button h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #333;
+        margin: 0; /* إزالة أي هوامش افتراضية للتأكد من عمل gap */
+    }
+
+    .section-button .icon-group {
+        display: flex;
+        align-items: center;
+        /* استخدام gap بدلاً من margin على الأيقونة لضمان التباعد الصحيح */
+        gap: 15px; /* مسافة بين الأيقونة والنص */
+        flex-grow: 1; /* للسماح للمجموعة بالتوسع وتوزيع المساحة */
+    }
+
+    /* **توجيه مجموعة الأيقونة والنص بناءً على الاتجاه (LTR/RTL)** */
+    html[dir="rtl"] .section-button .icon-group {
+        flex-direction: row-reverse; /* الأيقونة على اليمين، النص على اليسار */
+    }
+    html[dir="ltr"] .section-button .icon-group {
+        flex-direction: row; /* الأيقونة على اليسار، النص على اليمين */
+    }
+
+
+    .section-button .arrow-icon {
+        font-size: 20px;
+        color: #6366f1;
+        flex-shrink: 0; /* منع السهم من التقلص */
+        /* التعديل الجديد: زيادة المسافة للسهم بشكل كبير جداً للتأكد من رؤية التغيير */
+        margin-left: 30px !important; /* زيادة كبيرة والهامش المهم جداً */
+    }
+
+    /* **تعديل خاص بوضع LTR للسهم** */
+    html[dir="ltr"] .section-button .arrow-icon {
+        margin-right: 30px !important; /* زيادة كبيرة والهامش المهم جداً */
+        margin-left: 0; /* التأكد من إزالة الهامش الأيسر */
+    }
+
+
+    /* إخفاء القوائم الفرعية افتراضيًا */
+    .subsection-list {
+        display: none;
+        margin-top: 1rem;
+    }
+
+    .subsection-list.active {
+        display: block; /* إظهار القائمة عند التنشيط */
+    }
+
+    .subsection-list li {
+        padding: 0.75rem 0;
+        display: flex;
+        align-items: center;
+        gap: 10px; /* مسافة بين الأيقونة والنص داخل القائمة الفرعية */
+    }
+
+    /* **توجيه عناصر القائمة الفرعية بناءً على الاتجاه (LTR/RTL)** */
+    html[dir="rtl"] .subsection-list li {
+        flex-direction: row-reverse; /* الأيقونة على اليمين، النص على اليسار */
+        padding-right: 10px; /* مسافة داخلية من اليمين */
+        border-right: 2px solid #e0e7ff; /* خط صغير على اليمين */
+        padding-left: 0;
+        border-left: none;
+    }
+    html[dir="ltr"] .subsection-list li {
+        flex-direction: row; /* الأيقونة على اليسار، النص على اليمين */
+        padding-left: 10px; /* مسافة داخلية من اليسار */
+        border-left: 2px solid #e0e7ff; /* خط صغير على اليسار */
+        padding-right: 0;
+        border-right: none;
+    }
+
+
+    .subsection-list li a {
+        color: #4a5568;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+    .subsection-list li a:hover {
+        color: #4f46e5;
+    }
+
+    /* تخصيص ألوان أيقونات الأقسام */
+    .macro-icon { background-color: #e9d5ff; color: #a855f7; }
+    .finance-icon { background-color: #bfdbfe; color: #3b82f6; }
+    .operations-icon { background-color: #d1fae5; color: #10b981; }
+    .future-icon { background-color: #fde68a; color: #d97706; } /* أيقونة للمطبوعات */
+    .indicator-icon { background-color: #fee2e2; color: #ef4444; } /* لون جديد للمؤشرات */
+    .advanced-icon { background-color: #e0e7ff; color: #4f46c2; } /* لون جديد للأدوات المتقدمة */
+
+
+    .hero-section {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        color: white;
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .hero-section h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    /* أنماط الشعار الجديد */
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px; /* حجم صغير للشعار كأيقونة */
+      height: 50px;
+      border-radius: 12px;
+      background-color: #6366f1; /* لون مميز للشعار */
+      color: white;
+      font-size: 24px;
+      box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+      flex-shrink: 0; /* منع الشعار من التقلص */
+    }
+
+    /* **مكان الشعار في الرأس بناءً على الاتجاه** */
+    html[dir="rtl"] .brand-logo {
+        margin-right: 0;
+        margin-left: 10px; /* الشعار على اليمين في RTL */
+    }
+    html[dir="ltr"] .brand-logo {
+        margin-left: 0;
+        margin-right: 10px; /* الشعار على اليسار في LTR */
+    }
+
+
+    /* Typing Effect CSS */
+    #dynamic-text {
+      font-size: 1.25rem; /* Larger font for the dynamic text */
+      font-weight: 500;
+      color: white; /* Ensure text color is visible */
+      display: inline-block; /* Essential for caret to work */
+      border-right: .15em solid orange; /* Cursor */
+      animation: blink-caret .75s step-end infinite;
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: orange; }
+    }
+
+    /* توسيط الأيقونة في معلومات المطور */
+    .card .flex-col .w-20.h-20 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* تنسيق اسم المطور ليكون الحرف الأول من كل كلمة كبير */
+    .card h3.text-xl.font-extrabold {
+      text-transform: capitalize;
+    }
+
+    /* Language and Dark Mode Toggle */
+    .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* مسافة بين الأزرار */
+    }
+
+    .lang-toggle, .dark-mode-toggle {
+        padding: 8px 12px;
+        border-radius: 8px;
+        background-color: #edf2f7; /* لون خلفية خفيف للأزرار */
+        color: #4a5568;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .lang-toggle:hover, .dark-mode-toggle:hover {
+        background-color: #e2e8f0;
+        color: #2d3748;
+    }
+
+    /* Dark mode specific button styles */
+    body.dark .lang-toggle, body.dark .dark-mode-toggle {
+        background-color: #4a5568;
+        color: #e2e8f0;
+    }
+    body.dark .lang-toggle:hover, body.dark .dark-mode-toggle:hover {
+        background-color: #616e7f;
+        color: white;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="bg-white shadow-md py-4">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <div class="brand-logo">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <div data-lang-key="brand-slogan-container">
+            <h1 class="text-2xl font-extrabold text-gray-900" data-lang-key="brand-name">EconoCalc</h1>
+            <p class="text-sm text-gray-600" data-lang-key="brand-tagline">منصتك الاحترافية للحسابات الاقتصادية والمالية</p>
+          </div>
+        </div>
+
+        <div class="header-controls">
+          <div class="lang-toggle" id="langToggle">
+            <i class="fas fa-globe"></i> <span id="langText" class="ml-2">English</span>
+          </div>
+          <div class="dark-mode-toggle" id="darkModeToggle">
+            <i class="fas fa-moon"></i> </div>
+        </div>
+
+        <div class="text-sm text-gray-700 flex items-center" data-lang-key="header-info">
+          <span class="ml-2 font-medium">Youcef Boutemedjet</span>
+          <span class="mx-2">|</span>
+          <span class="font-normal">Third Year Finance Management Student, University of Batna 1</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow container mx-auto py-10 px-4">
+    <section class="hero-section">
+        <h2 data-lang-key="hero-title">مرحبًا بك في EconoCalc!</h2>
+        <p id="dynamic-text"></p>
+    </section>
+
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center" data-lang-key="tools-section-title">أدوات الحسابات</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      <div class="card p-6">
+        <div class="section-button" onclick="toggleSubsection('macro-list', this)">
+            <div class="icon-group">
+                <div class="section-icon macro-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 data-lang-key="macro-title">الاقتصاد الكلي</h3>
+            </div>
+            <i class="fas fa-chevron-down arrow-icon"></i>
+        </div>
+        <ul id="macro-list" class="subsection-list space-y-2">
+            <li>
+                <div class="feature-icon bg-purple-50 text-purple-500">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <a href="/macro/inflation" class="hover:underline" data-lang-key="inflation-calc">حساب نسبة التضخم</a>
+            </li>
+            <li>
+                <div class="feature-icon bg-purple-50 text-purple-500">
+                    <i class="fas fa-landmark"></i>
+                </div>
+                <a href="/macro/national-income" class="hover:underline" data-lang-key="national-income">مؤشرات الدخل الوطني</a>
+            </li>
+            </ul>
+      </div>
+
+      <div class="card p-6">
+        <div class="section-button" onclick="toggleSubsection('finance-list', this)">
+            <div class="icon-group">
+                <div class="section-icon finance-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h3 data-lang-key="finance-title">الرياضيات المالية</h3>
+            </div>
+            <i class="fas fa-chevron-down arrow-icon"></i>
+        </div>
+        <ul id="finance-list" class="subsection-list space-y-2">
+            <li>
+                <div class="feature-icon bg-indigo-50 text-indigo-500">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <a href="/finance/compound-interest" class="hover:underline" data-lang-key="compound-interest">الفائدة المركبة</a>
+            </li>
+            <li>
+                <div class="feature-icon bg-indigo-50 text-indigo-500">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <a href="/finance/simple-interest" class="hover:underline" data-lang-key="simple-interest">الفائدة البسيطة</a>
+            </li>
+            </ul>
+      </div>
+
+      <div class="card p-6">
+        <div class="section-button" onclick="toggleSubsection('operations-list', this)">
+            <div class="icon-group">
+                <div class="section-icon operations-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3 data-lang-key="operations-title">بحوث العمليات</h3>
+            </div>
+            <i class="fas fa-chevron-down arrow-icon"></i>
+        </div>
+        <ul id="operations-list" class="subsection-list space-y-2">
+            <li>
+                <div class="feature-icon bg-blue-50 text-blue-500">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <a href="/operations/simplex" class="hover:underline" data-lang-key="simplex">البرمجة الخطية (Simplex)</a>
+            </li>
+            </ul>
+      </div>
+    </div>
+
+    <hr class="my-12 border-t-2 border-gray-300 w-1/3 mx-auto">
+
+    <h2 class="text-3xl font-extrabold text-gray-900 mb-8 text-center" data-lang-key="upcoming-features-title">قريباً في EconoCalc</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      <div class="card p-6">
+        <div class="section-button">
+            <div class="icon-group">
+                <div class="section-icon future-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 data-lang-key="publications-title">المطبوعات والمقالات</h3>
+            </div>
+        </div>
+        <div class="mt-4 text-gray-600 text-center">
+            <p data-lang-key="publications-desc1">هذا القسم مخصص لإضافة مطبوعات ومقالات متخصصة **مستقبلًا**.</p>
+            <p class="mt-2 text-sm text-gray-500" data-lang-key="publications-desc2">ترقبوا المزيد من المحتوى القيم!</p>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="section-button">
+            <div class="icon-group">
+                <div class="section-icon indicator-icon">
+                    <i class="fas fa-chart-area"></i>
+                </div>
+                <h3 data-lang-key="indicators-title">المؤشرات الاقتصادية</h3>
+            </div>
+        </div>
+        <div class="mt-4 text-gray-600 text-center">
+            <p data-lang-key="indicators-desc1">سيتيح لك هذا القسم **مستقبلًا** متابعة أحدث المؤشرات الاقتصادية الهامة (مثل أسعار العملات، أسعار السلع، مؤشرات البورصة).</p>
+            <p class="mt-2 text-sm text-gray-500" data-lang-key="indicators-desc2">قريباً جداً، ستكون البيانات بين يديك!</p>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="section-button">
+            <div class="icon-group">
+                <div class="section-icon advanced-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h3 data-lang-key="advanced-tools-title">أدوات وتحليل متقدم</h3>
+            </div>
+        </div>
+        <div class="mt-4 text-gray-600 text-center">
+            <p data-lang-key="advanced-tools-desc1">يهدف هذا القسم إلى توفير أدوات حسابية وتحليلية **أكثر تخصصاً وعمقاً** في مجالات الاقتصاد والمالية.</p>
+            <p class="mt-2 text-sm text-gray-500" data-lang-key="advanced-tools-desc2">نعمل على تطوير حلول مبتكرة لمتطلباتك التحليلية!</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-12 border-t-2 border-gray-300 w-1/3 mx-auto">
+
+    <div class="card p-8 max-w-3xl mx-auto text-center mt-12">
+      <div class="flex flex-col items-center">
+        <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 text-3xl mb-4 shadow-inner">
+          <i class="fas fa-user-graduate"></i>
+        </div>
+        <h3 class="text-xl font-extrabold text-gray-900 mb-2" style="text-transform: capitalize;">Youcef Boutemedjet</h3>
+        <p class="text-gray-700 font-medium" data-lang-key="developer-role">Third Year Finance Management Student, University of Batna 1</p>
+        <p class="mt-5 text-gray-700 leading-relaxed max-w-xl mx-auto" data-lang-key="developer-bio">
+          منصة EconoCalc هي نتاج جهد شخصي ومستمر لتقديم أدوات حسابية متخصصة في المجال الاقتصادي والمالي، مصممة خصيصاً لدعم طلاب وباحثي المالية والاقتصاد. نسعى دائماً لتقديم حلول مبتكرة وموثوقة تسهم في تسهيل الفهم والتحليل الاقتصادي.
+        </p>
+        <div class="mt-4">
+            <a href="mailto:youcef.boutemedjet.segc@univ-batna1.edu.dz" class="text-blue-600 hover:underline font-medium">
+                <i class="fas fa-envelope mr-2"></i> youcef.boutemedjet.segc@univ-batna1.edu.dz
+            </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 border-t py-6 mt-8">
+    <div class="container mx-auto px-4 text-center text-gray-400 text-sm" data-lang-key="footer-text">
+      &copy; 2025 EconoCalc | تم التطوير بحب بواسطة Youcef Boutemedjet
+    </div>
+  </footer>
+
+  <script>
+    function toggleSubsection(id, clickedElement) {
+      document.querySelectorAll('.subsection-list').forEach(list => {
+        if (list.id !== id) {
+          list.classList.remove('active');
+          const otherArrowIcon = list.previousElementSibling.querySelector('.arrow-icon');
+          if (otherArrowIcon) {
+            otherArrowIcon.classList.remove('fa-chevron-up');
+            otherArrowIcon.classList.add('fa-chevron-down');
+          }
+        }
+      });
+
+      const list = document.getElementById(id);
+      const arrowIcon = clickedElement.querySelector('.arrow-icon');
+
+      list.classList.toggle('active');
+      arrowIcon.classList.toggle('fa-chevron-down');
+      arrowIcon.classList.toggle('fa-chevron-up');
+    }
+
+    // Dynamic Text Script
+    document.addEventListener('DOMContentLoaded', () => {
+        const dynamicTextElement = document.getElementById('dynamic-text');
+        const phrasesAr = [
+            "أدوات حسابية دقيقة لطلاب وباحثي الاقتصاد والمالية.",
+            "تبسيط المفاهيم الاقتصادية والمالية المعقدة.",
+            "مساعدك الأمثل في تحليل البيانات الاقتصادية.",
+            "منصة متطورة لحساباتك المالية اليومية.",
+            "اكتشف قوة الأرقام في عالم المال والاقتصاد.",
+            "كل ما تحتاجه من أدوات مالية واقتصادية في مكان واحد."
+        ];
+        const phrasesEn = [
+            "Accurate computational tools for economics and finance students and researchers.",
+            "Simplifying complex economic and financial concepts.",
+            "Your optimal assistant for economic data analysis.",
+            "An advanced platform for your daily financial calculations.",
+            "Discover the power of numbers in the world of finance and economics.",
+            "All the financial and economic tools you need in one place."
+        ];
+        let currentPhrases = phrasesAr; // Default to Arabic
+
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 80;
+        let deletingSpeed = 50;
+        let pauseTime = 2000;
+
+        function typeWriter() {
+            const currentPhrase = currentPhrases[phraseIndex];
+
+            if (!isDeleting && charIndex < currentPhrase.length) {
+                dynamicTextElement.textContent += currentPhrase.charAt(charIndex);
+                charIndex++;
+                window.typeWriterTimeout = setTimeout(typeWriter, typingSpeed);
+            } else if (isDeleting && charIndex >= 0) {
+                dynamicTextElement.textContent = currentPhrase.substring(0, charIndex);
+                charIndex--;
+                window.typeWriterTimeout = setTimeout(typeWriter, deletingSpeed);
+            } else if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                window.typeWriterTimeout = setTimeout(typeWriter, pauseTime);
+            } else if (isDeleting && charIndex < 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % currentPhrases.length;
+                charIndex = 0;
+                // تم زيادة هذا التأخير لجعل تبديل الجمل أبطأ قليلاً (1800ms)
+                window.typeWriterTimeout = setTimeout(typeWriter, 1800);
+            }
+        }
+
+        // Language Toggle Logic
+        const langToggle = document.getElementById('langToggle');
+        const langText = document.getElementById('langText');
+        let currentLang = 'ar'; // Default language
+
+        const translations = {
+            'ar': {
+                'brand-name': 'EconoCalc',
+                'brand-tagline': 'منصتك الاحترافية للحسابات الاقتصادية والمالية',
+                'header-info': '<span>Youcef Boutemedjet</span><span class="mx-2">|</span><span class="font-normal">طالب إدارة مالية سنة ثالثة، جامعة باتنة 1</span>',
+                'hero-title': 'مرحبًا بك في EconoCalc!',
+                'tools-section-title': 'أدوات الحسابات',
+                'macro-title': 'الاقتصاد الكلي',
+                'inflation-calc': 'حساب نسبة التضخم',
+                'national-income': 'مؤشرات الدخل الوطني',
+                'finance-title': 'الرياضيات المالية',
+                'compound-interest': 'الفائدة المركبة',
+                'simple-interest': 'الفائدة البسيطة',
+                'operations-title': 'بحوث العمليات',
+                'simplex': 'البرمجة الخطية (Simplex)',
+                'upcoming-features-title': 'قريباً في EconoCalc',
+                'publications-title': 'المطبوعات والمقالات',
+                'publications-desc1': 'هذا القسم مخصص لإضافة مطبوعات ومقالات متخصصة **مستقبلًا**.',
+                'publications-desc2': 'ترقبوا المزيد من المحتوى القيم!',
+                'indicators-title': 'المؤشرات الاقتصادية',
+                'indicators-desc1': 'سيتيح لك هذا القسم **مستقبلًا** متابعة أحدث المؤشرات الاقتصادية الهامة (مثل أسعار العملات، أسعار السلع، مؤشرات البورصة).',
+                'indicators-desc2': 'قريباً جداً، ستكون البيانات بين يديك!',
+                'advanced-tools-title': 'أدوات وتحليل متقدم',
+                'advanced-tools-desc1': 'يهدف هذا القسم إلى توفير أدوات حسابية وتحليلية **أكثر تخصصاً وعمقاً** في مجالات الاقتصاد والمالية.',
+                'advanced-tools-desc2': 'نعمل على تطوير حلول مبتكرة لمتطلباتك التحليلية!',
+                'developer-role': 'طالب إدارة مالية سنة ثالثة، جامعة باتنة 1',
+                'developer-bio': 'منصة EconoCalc هي نتاج جهد شخصي ومستمر لتقديم أدوات حسابية متخصصة في المجال الاقتصادي والمالي، مصممة خصيصاً لدعم طلاب وباحثي المالية والاقتصاد. نسعى دائماً لتقديم حلول مبتكرة وموثوقة تسهم في تسهيل الفهم والتحليل الاقتصادي.',
+                'footer-text': '&copy; 2025 EconoCalc | تم التطوير بحب بواسطة Youcef Boutemedjet'
+            },
+            'en': {
+                'brand-name': 'EconoCalc',
+                'brand-tagline': 'Your Professional Platform for Economic and Financial Calculations',
+                'header-info': '<span>Youcef Boutemedjet</span><span class="mx-2">|</span><span class="font-normal">Third Year Finance Management Student, University of Batna 1</span>',
+                'hero-title': 'Welcome to EconoCalc!',
+                'tools-section-title': 'Calculation Tools',
+                'macro-title': 'Macroeconomics',
+                'inflation-calc': 'Inflation Rate Calculation',
+                'national-income': 'National Income Indicators',
+                'finance-title': 'Financial Mathematics',
+                'compound-interest': 'Compound Interest',
+                'simple-interest': 'Simple Interest',
+                'operations-title': 'Operations Research',
+                'simplex': 'Linear Programming (Simplex)',
+                'upcoming-features-title': 'Coming Soon to EconoCalc',
+                'publications-title': 'Publications & Articles',
+                'publications-desc1': 'This section is dedicated to adding specialized publications and articles **in the future**.',
+                'publications-desc2': 'Stay tuned for more valuable content!',
+                'indicators-title': 'Economic Indicators',
+                'indicators-desc1': 'This section will **soon** allow you to follow important economic indicators (such as currency exchange rates, commodity prices, stock market indices).',
+                'indicators-desc2': 'Coming very soon, data will be at your fingertips!',
+                'advanced-tools-title': 'Advanced Tools & Analysis',
+                'advanced-tools-desc1': 'This section aims to provide **more specialized and in-depth** computational and analytical tools in the fields of economics and finance.',
+                'advanced-tools-desc2': 'We are working on developing innovative solutions for your analytical needs!',
+                'developer-role': 'Third Year Finance Management Student, University of Batna 1',
+                'developer-bio': 'EconoCalc is the result of a continuous personal effort to provide specialized computational tools in economics and finance, specifically designed to support finance and economics students and researchers. We constantly strive to provide innovative and reliable solutions that contribute to facilitating economic understanding and analysis.',
+                'footer-text': '&copy; 2025 EconoCalc | Developed with love by Youcef Boutemedjet'
+            }
+        };
+
+        function setLanguage(lang) {
+            document.documentElement.setAttribute('lang', lang);
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            currentLang = lang;
+            langText.textContent = lang === 'ar' ? 'English' : 'العربية';
+
+            // Adjust icon order in language toggle
+            const langToggleIcon = langToggle.querySelector('i');
+            if (lang === 'ar') {
+                langToggle.insertBefore(langText, langToggleIcon);
+            } else {
+                langToggle.insertBefore(langToggleIcon, langText);
+            }
+
+            currentPhrases = lang === 'ar' ? phrasesAr : phrasesEn;
+
+            // Update all static text based on data-lang-key
+            for (const key in translations[lang]) {
+                const element = document.querySelector(`[data-lang-key="${key}"]`);
+                if (element) {
+                    if (key === 'brand-slogan-container') {
+                        if (element.querySelector('[data-lang-key="brand-name"]')) {
+                            element.querySelector('[data-lang-key="brand-name"]').textContent = translations[lang]['brand-name'];
+                        }
+                        if (element.querySelector('[data-lang-key="brand-tagline"]')) {
+                            element.querySelector('[data-lang-key="brand-tagline"]').textContent = translations[lang]['brand-tagline'];
+                        }
+                    } else if (key === 'header-info' || key === 'footer-text') {
+                        element.innerHTML = translations[lang][key];
+                    }
+                    else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            }
+
+            // Reset dynamic text for new language
+            dynamicTextElement.textContent = '';
+            phraseIndex = 0;
+            charIndex = 0;
+            isDeleting = false;
+            clearTimeout(window.typeWriterTimeout);
+            window.typeWriterTimeout = setTimeout(typeWriter, 100);
+        }
+
+        langToggle.addEventListener('click', () => {
+            setLanguage(currentLang === 'ar' ? 'en' : 'ar');
+        });
+
+        setLanguage('ar');
+
+        // Dark Mode Logic
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        typeWriter();
+    });
+  </script>
+</body>
+</html>
